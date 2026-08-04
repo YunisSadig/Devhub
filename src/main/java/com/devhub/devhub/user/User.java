@@ -139,7 +139,6 @@ public class User {
             String city
     ) {
         this.firstName = firstName;
-        this.lastName = firstName;
         this.lastName = lastName;
         this.bio = bio;
         this.country = country;
