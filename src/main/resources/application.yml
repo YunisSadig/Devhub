@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: devhub
+
+  profiles:
+    active: local
+
+server:
+  port: 8080
