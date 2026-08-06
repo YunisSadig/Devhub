@@ -1,4 +1,4 @@
-package com.devhub.devhub.security;
+package com.devhub.devhub.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

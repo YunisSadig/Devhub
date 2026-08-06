@@ -9,11 +9,11 @@ spring:
     hibernate:
       ddl-auto: update
 
-    show-sql: true
+jwt:
+  access-token:
+    secret: ${JWT_ACCESS_SECRET}
+    expiration: ${JWT_ACCESS_EXPIRATION}        # 15 minutes
 
-    properties:
-      hibernate:
-        format_sql: true
-
-  flyway:
-    enabled: false
+  refresh-token:
+    secret: ${JWT_REFRESH_SECRET}
+    expiration: ${JWT_REFRESH_EXPIRATION}     # 7 days

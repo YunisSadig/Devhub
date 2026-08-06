@@ -11,3 +11,12 @@ spring:
 
   flyway:
     enabled: false
+
+jwt:
+  access-token:
+    secret: ${TEST_JWT_ACCESS_SECRET}
+    expiration: ${TEST_JWT_ACCESS_EXPIRATION}
+
+  refresh-token:
+    secret: ${TEST_JWT_REFRESH_SECRET}
+    expiration: ${TEST_JWT_REFRESH_EXPIRATION}
