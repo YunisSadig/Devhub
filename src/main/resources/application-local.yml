@@ -7,13 +7,16 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
+
+  flyway:
+    validate-migration-naming: true
 
 jwt:
   access-token:
     secret: ${JWT_ACCESS_SECRET}
-    expiration: ${JWT_ACCESS_EXPIRATION}        # 15 minutes
+    expiration: ${JWT_ACCESS_EXPIRATION}
 
   refresh-token:
     secret: ${JWT_REFRESH_SECRET}
-    expiration: ${JWT_REFRESH_EXPIRATION}     # 7 days
+    expiration: ${JWT_REFRESH_EXPIRATION}
