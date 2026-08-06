@@ -7,13 +7,16 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
-
-    show-sql: true
-
-    properties:
-      hibernate:
-        format_sql: true
+      ddl-auto: validate
 
   flyway:
-    enabled: false
+    validate-migration-naming: true
+
+jwt:
+  access-token:
+    secret: ${JWT_ACCESS_SECRET}
+    expiration: ${JWT_ACCESS_EXPIRATION}
+
+  refresh-token:
+    secret: ${JWT_REFRESH_SECRET}
+    expiration: ${JWT_REFRESH_EXPIRATION}
