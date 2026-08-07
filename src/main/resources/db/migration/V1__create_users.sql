@@ -1,32 +1,32 @@
-CREATE TABLE users
-(
-    id                BIGSERIAL PRIMARY KEY,
-    version           BIGINT,
+CREATE TABLE users (
+                       id UUID PRIMARY KEY,
 
-    first_name        VARCHAR(50)  NOT NULL,
-    last_name         VARCHAR(50)  NOT NULL,
+                       version BIGINT,
 
-    email             VARCHAR(255) NOT NULL,
-    password          VARCHAR(255) NOT NULL,
+                       first_name VARCHAR(50) NOT NULL,
+                       last_name VARCHAR(50) NOT NULL,
 
-    role              VARCHAR(20)  NOT NULL,
+                       email VARCHAR(255) NOT NULL,
+                       password VARCHAR(255) NOT NULL,
 
-    enabled           BOOLEAN      NOT NULL DEFAULT TRUE,
-    email_verified    BOOLEAN      NOT NULL DEFAULT FALSE,
+                       role VARCHAR(20) NOT NULL,
 
-    bio               VARCHAR(500),
-    profile_image_url VARCHAR(255),
+                       enabled BOOLEAN NOT NULL DEFAULT TRUE,
+                       email_verified BOOLEAN NOT NULL DEFAULT FALSE,
 
-    country           VARCHAR(100),
-    city              VARCHAR(100),
+                       bio VARCHAR(500),
+                       profile_image_url VARCHAR(255),
 
-    last_login_at     TIMESTAMP,
+                       country VARCHAR(100),
+                       city VARCHAR(100),
 
-    created_at        TIMESTAMP    NOT NULL,
-    updated_at        TIMESTAMP    NOT NULL,
+                       last_login_at TIMESTAMP,
 
-    CONSTRAINT uk_users_email UNIQUE (email)
+                       created_at TIMESTAMP NOT NULL,
+                       updated_at TIMESTAMP NOT NULL,
+
+                       CONSTRAINT uk_users_email UNIQUE (email)
 );
 
 CREATE INDEX idx_users_email
-    ON users (email);
+    ON users(email);
