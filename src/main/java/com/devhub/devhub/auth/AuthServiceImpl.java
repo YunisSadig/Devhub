@@ -94,4 +94,8 @@ public class AuthServiceImpl implements AuthService {
                 "Bearer"
         );
     }
+    @Override
+    public void logout(String refreshToken) {
+        refreshTokenService.revoke(refreshToken);
+    }
 }
