@@ -65,4 +65,8 @@ public class RefreshToken {
     public boolean isExpired() {
         return LocalDateTime.now().isAfter(expiresAt);
     }
+
+    public boolean isValid() {
+        return !revoked && !isExpired();
+    }
 }
