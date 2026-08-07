@@ -3,9 +3,9 @@ package com.devhub.devhub.auth;
 import com.devhub.devhub.auth.dto.AuthResponse;
 import com.devhub.devhub.auth.dto.LoginRequest;
 import com.devhub.devhub.auth.dto.RegisterRequest;
+import com.devhub.devhub.auth.dto.LogoutRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,22 +20,22 @@ public class AuthController {
     public ResponseEntity<AuthResponse> register(
             @Valid @RequestBody RegisterRequest request
     ) {
-
-        AuthResponse response = authService.register(request);
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
+        return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(
             @Valid @RequestBody LoginRequest request
     ) {
-
-        AuthResponse response = authService.login(request);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(authService.login(request));
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(
+            @Valid @RequestBody LogoutRequest request
+    ) {
+        authService.logout(request.refreshToken());
+
+        return ResponseEntity.noContent().build();
+    }
 }
