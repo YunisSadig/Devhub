@@ -6,6 +6,7 @@ import com.devhub.devhub.auth.dto.RegisterRequest;
 import com.devhub.devhub.common.EmailAlreadyExistsException;
 import com.devhub.devhub.common.ResourceNotFoundException;
 import com.devhub.devhub.security.jwt.JwtService;
+import com.devhub.devhub.security.refresh.RefreshTokenService;
 import com.devhub.devhub.security.user.CustomUserDetails;
 import com.devhub.devhub.user.Role;
 import com.devhub.devhub.user.User;
@@ -22,12 +23,10 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
-
     private final JwtService jwtService;
-
     private final AuthenticationManager authenticationManager;
+    private final RefreshTokenService refreshTokenService;
 
     @Override
     public AuthResponse register(RegisterRequest request) {
@@ -53,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
                 jwtService.generateAccessToken(userDetails);
 
         String refreshToken =
-                jwtService.generateRefreshToken(userDetails);
+                refreshTokenService.create(savedUser).getToken();
 
         return new AuthResponse(
                 accessToken,
@@ -74,14 +73,20 @@ public class AuthServiceImpl implements AuthService {
 
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("User", request.email())
+                        new ResourceNotFoundException(
+                                "User",
+                                request.email()
+                        )
                 );
 
-        UserDetails userDetails = new CustomUserDetails(user);
+        UserDetails userDetails =
+                new CustomUserDetails(user);
 
-        String accessToken = jwtService.generateAccessToken(userDetails);
+        String accessToken =
+                jwtService.generateAccessToken(userDetails);
 
-        String refreshToken = jwtService.generateRefreshToken(userDetails);
+        String refreshToken =
+                refreshTokenService.create(user).getToken();
 
         return new AuthResponse(
                 accessToken,
