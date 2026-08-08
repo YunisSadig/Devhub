@@ -3,6 +3,7 @@ package com.devhub.devhub.security.jwt;
 import com.devhub.devhub.security.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -61,26 +62,15 @@ public class JwtService {
             UserDetails userDetails,
             boolean refreshToken
     ) {
-        String username = extractUsername(token, refreshToken);
+        try {
+            Claims claims = extractAllClaims(token, refreshToken);
 
-        return username.equals(userDetails.getUsername())
-                && !isTokenExpired(token, refreshToken);
-    }
+            return claims.getSubject().equals(userDetails.getUsername())
+                    && claims.getExpiration().after(new Date());
 
-    private boolean isTokenExpired(String token, boolean refreshToken) {
-        return extractExpiration(token, refreshToken)
-                .before(new Date());
-    }
-
-    private Date extractExpiration(
-            String token,
-            boolean refreshToken
-    ) {
-        return extractClaim(
-                token,
-                Claims::getExpiration,
-                refreshToken
-        );
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
     }
 
     private <T> T extractClaim(

@@ -13,10 +13,10 @@ spring:
     validate-migration-naming: true
 
 jwt:
-  access-token:
+  access:
     secret: ${JWT_ACCESS_SECRET}
     expiration: ${JWT_ACCESS_EXPIRATION}
 
-  refresh-token:
+  refresh:
     secret: ${JWT_REFRESH_SECRET}
     expiration: ${JWT_REFRESH_EXPIRATION}
